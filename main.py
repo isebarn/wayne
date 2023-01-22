@@ -84,9 +84,13 @@ class ItemsController(Resource):
                 except Exception as e:
                     pass
 
+        upcoming = [x for x in data if -1 < (datetime.fromisoformat(x['date'][-1]) - datetime.now()).days < 10]
+        rest = [x for x in data if (datetime.fromisoformat(x['date'][-1]) - datetime.now()).days >= 10]
 
-
-        return data
+        return {
+            "upcoming": upcoming,
+            "rest": rest
+        }
 
 
 if __name__ == "__main__":
